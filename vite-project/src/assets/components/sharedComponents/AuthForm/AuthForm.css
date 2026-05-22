@@ -1,0 +1,211 @@
+/* ==========================================================================
+    AUTH FORM COMPONENT STYLES (Sign In / Sign Up) 
+   ========================================================================= */
+
+.auth-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.auth-logo-img {
+    height: 36px;
+    object-fit: contain;
+    margin-bottom: 18px;
+}
+
+.auth-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.auth-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ==========================================================================
+    GRID LAYOUT FOR SIGN UP FIELDS 
+   ========================================================================= */
+.fields-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; 
+    width: 100%;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.half-width {
+    width: calc(50% - 7.5px); 
+}
+
+.auth-footer {
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 15px;
+    font-weight: 400;
+}
+
+.auth-link {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: underline;
+    margin-left: 3px;
+    transition: var(--transition-fast);
+}
+
+.auth-link:hover {
+    color: #E59E00;
+}
+
+/* ==========================================================================
+    IMAGE UPLOAD INTERACTION
+   ========================================================================= */
+.upload-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.upload-icon {
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+.image-remove-btn {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    z-index: 10;
+    background: var(--danger-color);
+    color: var(--bg-white);
+    border: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    font-size: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+}
+
+.image-remove-btn:hover {
+    transform: scale(1.1);
+    background: #b71c1c;
+}
+
+/* ==========================================================================
+    POP-UP STRUCTURE & INTERACTION
+   ========================================================================= */
+
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.popup-card {
+    background: var(--bg-white);
+    padding: 35px 30px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+
+.popup-icon-box {
+    width: 60px;
+    height: 60px;
+    color: var(--bg-white);
+    border-radius: 50%;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px auto;
+}
+
+.popup-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+}
+
+.popup-message {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 24px;
+}
+
+.popup-btn {
+    background-color: var(--primary-color);
+    color: var(--bg-white);
+    border: none;
+    padding: 12px 30px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: var(--transition-fast);
+}
+
+.popup-btn:hover {
+    opacity: 0.9;
+}
+
+/* ==========================================================================
+    ANIMATIONS KEYS
+   ========================================================================= */
+.animated-bounce {
+    animation: popupShow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popupShow {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.animated-shake {
+    animation: popupShake 0.4s ease-in-out;
+}
+
+@keyframes popupShake {
+    0%, 100% { transform: scale(1); }
+    20%, 60% { transform: translateX(-8px); }
+    40%, 80% { transform: translateX(8px); }
+}

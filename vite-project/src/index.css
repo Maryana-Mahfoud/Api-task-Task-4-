@@ -1,0 +1,231 @@
+/* ==========================================================================
+    1. GLOBAL VARIABLES & ROOT CONFIGURATION (تمت مراجعة الألوان وتوحيدها)
+   ========================================================================== */
+:root {
+    /* Colors */
+    --primary-color: #FEAF00;       
+    --primary-light: #F8D442;      
+    --primary-gradient: linear-gradient(180deg, var(--primary-color) 0%, var(--primary-light) 100%);
+    
+    --bg-main: #F8F8F8;
+    --bg-sidebar: #F2EAE1;
+    --bg-white: #FFFFFF;
+    
+    --text-dark: #1A1A1A;
+    --text-muted: #6C6C6C;
+    --text-light: #CDCDCD;
+    
+    --danger-color: #E53935;
+    --success-color: #4CAF50;
+
+    /* Borders & Shadows */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 20px;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.05);
+
+    /* Transitions */
+    --transition-fast: all 0.2s ease-in-out;
+    --transition-normal: all 0.3s ease;
+}
+
+/* ==========================================================================
+    2. RESET & WEBKIT CUSTOMIZATION 
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-dark);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #E0E0E0;
+    border-radius: var(--border-radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color); 
+}
+
+input,
+button,
+textarea,
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border: none;
+    font-family: inherit;
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--text-dark);
+    -webkit-box-shadow: 0 0 0px 1000px var(--bg-white) inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ==========================================================================
+    3. GLOBAL UTILITY CLASSES 
+   ========================================================================== */
+
+/* Layout Utilities */
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.btn-primary {
+    background: var(--primary-gradient);
+    color: var(--bg-white);
+    font-weight: 600;
+    padding: 14px;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    text-align: center;
+    text-transform: uppercase;
+    transition: var(--transition-fast);
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background: var(--primary-color);
+    opacity: 0.95;
+    transform: translateY(-1px);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+
+.auth-container {
+    min-height: 100vh;
+    background: var(--primary-gradient);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.auth-card {
+    background: var(--bg-white);
+    padding: 44px 30px;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    width: 100%;
+    max-width: 475px;
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form-input {
+    border: 1px solid #E5E5E5;
+    padding: 14px 16px;
+    border-radius: var(--border-radius-sm);
+    font-size: 14px;
+    color: var(--text-dark);
+    background-color: var(--bg-white);
+    transition: var(--transition-fast);
+    width: 100%;
+}
+
+.form-input::placeholder {
+    color: var(--text-light);
+}
+
+
+.form-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(254, 175, 0, 0.15);
+}
+
+.image-upload-box {
+    border: 1px dashed var(--primary-color);
+    border-radius: 6px;
+    background: #FFFDF6;
+    height: 60px;
+    width: 60px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: var(--transition-fast);
+    overflow: hidden;
+}
+
+.image-upload-box:hover {
+    background: #FFF9E6;
+    border-color: var(--primary-color);
+}
+
+.image-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.modal-overlay, .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
