@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import type { IMenuItem } from "../../../Interfaces/sideBar";
 import favIcone from "../../../Images/favIcone.svg";
@@ -12,11 +12,17 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  /* store user data */
-  const [userData, setUserData] = useState({
-    name: "User Name",
-    img:person /* default image */
+  /*state to read data  */
+  const [userData] = useState(() => {
+    const storedName = localStorage.getItem("user_full_name");
+    const storedAvatar = localStorage.getItem("user_avatar");
+
+    return {
+      name: storedName || "User Name",
+      img: storedAvatar && storedAvatar !== "null" ? storedAvatar : person,
+    };
   });
+
 
   // array of items to display in the sidebar menu with their paths and icons
   const menuItems: IMenuItem[] = [
@@ -24,24 +30,6 @@ const Sidebar = () => {
     { id: "favorites", label: "Favorites", icon: favIcone, path: "/dashboard" },
     { id: "orders", label: "order list", icon: favIcone, path: "/dashboard" },
   ];
-
-useEffect(() => {
-    // fetch user data from local storage to display it in the sidebar
-    const storedName = localStorage.getItem("user_full_name");
-    const storedAvatar = localStorage.getItem("user_avatar");
-    
-    // نحدد القيم الجديدة المستهدفة بناءً على التخزين
-    const nextName = storedName || "User Name";
-    const nextAvatar = storedAvatar && storedAvatar !== "null" ? storedAvatar : person;
-
-    // ✨ التعديل السحري: نحدث الـ State فقط إذا كانت البيانات المخزنة تختلف عن البيانات الحالية
-    if (nextName !== userData.name || nextAvatar !== userData.img) {
-      setUserData({
-        name: nextName,
-        img: nextAvatar
-      });
-    }
-  }, []);
 
   //function to logOut
   const handleLogout = () => {
@@ -56,7 +44,7 @@ useEffect(() => {
         <img src={logo} alt="Logo" />
       </div>
 
-      
+      {/* User Section */}
       <div className="sidebar-user-card">
         <div className="user-avatar-wrapper">
           <img src={userData.img} alt="User Profile" className="user-avatar-img" />
@@ -64,7 +52,7 @@ useEffect(() => {
         <h3 className="user-profile-name">{userData.name}</h3>
       </div>
 
-      
+      {/* Navigation Menu */}
       <nav className="sidebar-menu-nav">
         <ul className="sidebar-menu-list">
           {menuItems.map((item) => {
@@ -85,12 +73,11 @@ useEffect(() => {
         </ul>
       </nav>
 
-      
+      {/* Footer / Logout */}
       <div className="sidebar-footer-zone">
         <button className="logout-action-btn" onClick={handleLogout}>
           Logout
           <img src={signout} alt="Logout" className="logout-icon" />
-          
         </button>
       </div>
     </aside>

@@ -1,0 +1,326 @@
+/* ==========================================================================
+    main color palette and design tokens for the Add Item page
+   ========================================================================== */
+:root {
+    --primary-color: #F59E0B;
+    --primary-hover: #D97706;
+    --bg-white: #ffffff;
+    --text-dark: #000000;
+    --text-muted: #718096;
+    --border-color: #E2E8F0;
+}
+
+/* ==========================================================================
+    styling for the Add Item page layout and components
+   ========================================================================== */
+.add-item-page-wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--bg-white);
+    box-sizing: border-box;
+}
+
+.add-item-container {
+    flex: 1;
+    margin-left: 260px; 
+    padding: 60px 80px;
+    max-width: 1300px; 
+    width: calc(100% - 260px);
+    box-sizing: border-box;
+}
+
+
+.back-btn {
+    background: var(--bg-white);
+    border: 1px solid #EAEAEA;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-bottom: 35px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    font-size: 1.2rem;
+    color: #333;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.back-btn:hover {
+    transform: scale(1.05);
+    background-color: #FAFAFA;
+}
+
+
+.add-item-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 45px;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+}
+
+/* ==========================================================================
+    3.layout for displaying 
+   ========================================================================== */
+.add-item-form-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr; 
+    gap: 50px;
+    align-items: start;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.inputs-section {
+    display: flex;
+    flex-direction: column;
+    gap: 30px; 
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.uploader-section {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group, .custom-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group label, .custom-input-group label {
+    font-size: 1.1rem;
+    color: #333333;
+    font-weight: 600;
+}
+
+.form-group input, .custom-input-group input {
+    width: 100% !important; 
+    padding: 16px 20px; 
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 1.05rem;
+    outline: none;
+    background-color: #FAFAFA;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus, .custom-input-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+    background-color: #ffffff;
+}
+
+/* ==========================================================================
+    4. box to upload images 
+   ========================================================================== */
+.image-upload-section, .uploader-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.image-upload-section label, .uploader-container label {
+    font-size: 1.1rem;
+    color: #333333;
+    font-weight: 600;
+}
+
+.upload-dropzone, .dropzone, .image-uploader-box {
+    border: 2px dashed var(--primary-color) !important;
+    border-radius: 14px;
+    height: fit-content; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #FEFBF6;
+    width: 100% !important; 
+    box-sizing: border-box;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.upload-dropzone:hover {
+    background-color: #FFF9EE;
+}
+
+.upload-icon {
+    font-size: 3.8rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.upload-text {
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.upload-dropzone img, .dropzone img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+/* ==========================================================================
+    5.save button
+   ========================================================================== */
+.form-submit-row {
+    grid-column: 1 / -1; 
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    width: 100%;
+}
+
+.save-item-btn {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    padding: 16px 140px; 
+    border-radius: 10px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+    transition: all 0.2s ease-in-out;
+}
+
+.save-item-btn:hover:not(:disabled) {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(245, 158, 11, 0.4);
+}
+
+.save-item-btn:active {
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+    6. pop-up success and error messages
+   ========================================================================== */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999 !important; 
+    animation: fadeIn 0.25s ease-out;
+}
+
+.popup-box {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    animation: scaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-sizing: border-box;
+}
+
+.popup-box h2 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin: 18px 0 12px 0;
+    color: #111111;
+}
+
+.popup-box p {
+    font-size: 1.05rem;
+    color: #555555;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.popup-icon-wrapper {
+    font-size: 4.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pop-icon-success { color: #10B981; }
+.pop-icon-err { color: #EF4444; }
+
+.popup-close-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 14px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s;
+}
+
+.popup-close-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleUp { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+/* ==========================================================================
+    7.(Responsive)
+   ========================================================================== */
+@media (max-width: 1150px) {
+    .add-item-container {
+        padding: 40px 40px;
+    }
+    .add-item-form-grid {
+        gap: 40px;
+    }
+}
+
+@media (max-width: 992px) {
+    .add-item-form-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+    .add-item-container {
+        margin-left: 0;
+        width: 100%;
+        padding: 40px 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .add-item-container {
+        padding: 30px 20px;
+    }
+    .add-item-title {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+    .save-item-btn {
+        width: 100%;
+        padding: 14px;
+    }
+}

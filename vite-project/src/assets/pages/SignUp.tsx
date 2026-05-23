@@ -51,7 +51,7 @@ const SignUp = () => {
         localStorage.setItem("user_full_name", `${firstName} ${lastName}`);
       }
 
-      // ✨ تصحيح التكرار: نقوم بإرفاق الصورة بداخل الـ FormData للسيرفر مباشرة دون إعادة تعريف المتغير
+      // put the image file in the form data to send it to the backend
       if (imageFile) {
         formData.set("profile_image", imageFile); 
       }
@@ -69,7 +69,7 @@ const SignUp = () => {
       if (response.ok) {
         setShowSuccessPopup(true); 
       } else {
-        // إذا أرجع السيرفر مصفوفة أخطاء تفصيلية نعرضها، وإلا نعرض الرسالة العامة
+        
         if (result.errors) {
           const detailedErrors = Object.values(result.errors).flat().join(" | ");
           setErrorMessage(detailedErrors);

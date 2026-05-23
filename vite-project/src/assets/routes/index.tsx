@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
-import LayOut from "../pages/layOut";
+import LayOut from "../pages/LayOut";
 import AddItem from "../pages/AddItem";
 import EditItem from "../pages/EditItem";
 import ShowItemInfo from "../pages/ShowItemInfo";

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthForm from "../components/sharedComponents/AuthForm/AuthForm";
-import person from "../Images/person.svg";
 import type { InputField } from "../Interfaces/authInterface"; 
+import person from "../Images/person.svg"
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -40,19 +40,25 @@ const SignIn = () => {
         
         /* store token in localStorage for authenticated requests */
         if (result.token) {
-          localStorage.setItem("token", result.token);
+          localStorage.setItem("token", result.token); 
         }
 
-        /* store user information in localStorage */
+        /* store user information in localStorage safely */
         if (result.user) {
-          const firstName = result.user.first_name;
-          const lastName = result.user.last_name;
-          if (firstName) {
-            localStorage.setItem("user_full_name", `${firstName} ${lastName || ""}`.trim());
-          }
-          if (result.user.profile_image && result.user.profile_image !== "null") {
+          const firstName = result.user.first_name || "";
+          const lastName = result.user.last_name || "";
+          const fullName = `${firstName} ${lastName}`.trim();
+
+    
+          localStorage.setItem("user_full_name", fullName || "User Name");
+
+          
+          if (result.user.profile_image && result.user.profile_image !== "null" && result.user.profile_image.trim() !== "") {
             localStorage.setItem("user_avatar", result.user.profile_image);
-          }
+          }else {
+            
+            localStorage.setItem("user_avatar", person); 
+      }
         }
 
         /* show success pop-up */
