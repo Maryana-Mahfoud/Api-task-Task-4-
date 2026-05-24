@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import type { IProduct } from "../Interfaces/productInterface";
 import DashboardHeader from "../components/DashboardComponents/DashboardHeaders/DashboardHeader";
 import ProductCard from "../components/sharedComponents/ProductForm/ProductCard";
+import Pagination from "../components/sharedComponents/Pagination/Pagination"; 
 import { GiSandsOfTime } from "react-icons/gi";
 
 const Dashboard = () => {
@@ -13,12 +14,14 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // state to hold the product that the user wants to delete,
-  //  used for showing the confirmation popup
+  //variable to manage pagination
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 8; 
+
   const [productToDelete, setProductToDelete] = useState<IProduct | null>(null);
 
-  // fetch products from the backend API when the component mounts
-useEffect(() => {
+  // fetching products from the backend API when the component mounts
+  useEffect(() => {
     const fetchProducts = async () => {
       try {
         setIsLoading(true); 
@@ -43,7 +46,9 @@ useEffect(() => {
     fetchProducts();
   }, []);
 
+  // function to handle search input changes and filter products accordingly
   const handleSearch = (searchTerm: string) => {
+    setCurrentPage(1); 
     if (!searchTerm.trim()) {
       setFilteredProducts(products);
       return;
@@ -56,13 +61,10 @@ useEffect(() => {
     navigate("/dashboard/add-item"); 
   };
 
-  // 1. function to handle when the user clicks the edit button on a product card, 
-  // it will navigate to the edit page for that product
   const handleEditProductClick = (product: IProduct) => {
     navigate(`/dashboard/edit-item/${product.id}`);
   };
 
-  // call this function when the user confirms they want to delete the product in the popup
   const handleConfirmDelete = async () => {
     if (!productToDelete) return;
 
@@ -79,70 +81,84 @@ useEffect(() => {
         throw new Error("Failed to delete the product. Please try again.");
       }
 
-      // update the products state by removing the deleted product
       const updatedProducts = products.filter((p) => p.id !== productToDelete.id);
       setProducts(updatedProducts);
       setFilteredProducts(updatedProducts);
-      
-      // close the popup after deletion
       setProductToDelete(null);
+      
+      // less totalPage number
+      const newTotalPages = Math.ceil(updatedProducts.length / itemsPerPage);
+      if (currentPage > newTotalPages && currentPage > 1) {
+        setCurrentPage(newTotalPages);
+      }
+
     } catch (error: unknown) {
       if (error instanceof Error) {
         setErrorMessage(error.message);
       }
     }
-  };
+  }
+
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  
+  const currentProductsToShow = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <div className="dashboard-page-content" style={{ padding: "30px", width: "100%", minHeight: "100vh" }}>
+    <div className="dashboard-page-content" style={{ padding: "30px", width: "100%", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       
       <DashboardHeader onSearch={handleSearch} onAddProductClick={handleAddProductClick} />
 
       {isLoading ? (
-        <div className="loading-container" style={{ textAlign: "center", padding: "80px 20px" }}>
+        <div className="loading-container" style={{ textAlign: "center", padding: "80px 20px", flex: 1 }}>
           <GiSandsOfTime style={{ fontSize: "120px", color: "#f2a700", marginBottom: "20px", animation: "spin 2s linear infinite" }} />
           <p style={{ color: "#666" }}>Loading products, please wait...</p>
         </div>
       ) : (
-        <div className="products-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "25px", marginTop: "20px" }}>
-          {filteredProducts.length > 0 ? (
-            filteredProducts.map((product) => (
-              <ProductCard 
-                key={product.id} 
-                product={product} 
-                // 2.  pass the handleEditProductClick function to the ProductCard component,
-                onEditClick={handleEditProductClick}
-                //  pressing the delete button on a product card, 
-                onDeleteClick={(prod) => setProductToDelete(prod)} 
-              />
-            ))
-          ) : (
-            <div className="no-products-box" style={{ gridColumn: "1 / -1", textAlign: "center", padding: "40px", color: "#888" }}>
-              <p>No products available to show.</p>
-            </div>
+        <div style={{ flex: 1 }}>
+          
+          <div className="products-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "25px", marginTop: "20px" }}>
+            {currentProductsToShow.length > 0 ? (
+              currentProductsToShow.map((product) => (
+                <ProductCard 
+                  key={product.id} 
+                  product={product} 
+                  onEditClick={handleEditProductClick}
+                  onDeleteClick={(prod) => setProductToDelete(prod)} 
+                />
+              ))
+            ) : (
+              <div className="no-products-box" style={{ gridColumn: "1 / -1", textAlign: "center", padding: "40px", color: "#888" }}>
+                <p>No products available to show.</p>
+              </div>
+            )}
+          </div>
+
+          
+          {totalPages > 1 && (
+            <Pagination 
+              currentPage={currentPage} 
+              totalPages={totalPages} 
+              onPageChange={(page) => setCurrentPage(page)} 
+            />
           )}
         </div>
       )}
 
-      {/* popUp to confirm deletion */}
+      
       {productToDelete && (
         <div className="delete-popup-overlay">
           <div className="delete-popup-card">
             <h3 className="delete-popup-title">ARE YOU SURE YOU WANT TO DELETE THE PRODUCT?</h3>
-            
             <div className="delete-popup-buttons">
-              <button className="delete-btn-yes" onClick={handleConfirmDelete}>
-                Yes
-              </button>
-              <button className="delete-btn-no" onClick={() => setProductToDelete(null)}>
-                No
-              </button>
+              <button className="delete-btn-yes" onClick={handleConfirmDelete}>Yes</button>
+              <button className="delete-btn-no" onClick={() => setProductToDelete(null)}>No</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Error Popup */}
       {errorMessage && (
         <div className="popup-overlay">
           <div className="popup-card animated-shake">

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"; 
 import type { IProduct } from "../../../Interfaces/productInterface";
 import "./ProductCard.css";
 import Iphone from "../../../Images/Iphone.svg";
@@ -11,14 +12,21 @@ interface ProductCardProps {
 const DEFAULT_IMAGE = Iphone; 
 
 const ProductCard = ({ product, onDeleteClick, onEditClick }: ProductCardProps) => {
+    const navigate = useNavigate(); 
 
     const productImage = product.image_url && product.image_url.trim() !== "" 
         ? product.image_url 
         : DEFAULT_IMAGE;
 
+    // function to handle card click and navigate to product details page
+    const handleCardClick = () => {
+        navigate(`/dashboard/show-item/${product.id}`); 
+    };
+
     return (
         <div className="product-card">
-            <div className="product-img-container">
+
+            <div className="product-img-container" onClick={handleCardClick} style={{ cursor: "pointer" }}>
                 <img 
                     src={productImage} 
                     alt={product.name} 
@@ -36,14 +44,27 @@ const ProductCard = ({ product, onDeleteClick, onEditClick }: ProductCardProps) 
                     }}
                 />
                 
-                {/*overlay*/}
+                {/* overlay */}
+
                 <div className="product-overlay">
                     <h3 className="product-name-overlay">{product.name}</h3>
                     <div className="product-actions">
-                        <button className="btn-action edit-btn" onClick={() => onEditClick(product)}>
+                        <button 
+                            className="btn-action edit-btn" 
+                            onClick={(e) => { 
+                                e.stopPropagation(); 
+                                onEditClick(product); 
+                            }}
+                        >
                             Edit
                         </button>
-                        <button className="btn-action delete-btn" onClick={() => onDeleteClick(product)}>
+                        <button 
+                            className="btn-action delete-btn" 
+                            onClick={(e) => { 
+                                e.stopPropagation(); 
+                                onDeleteClick(product); 
+                            }}
+                        >
                             Delete
                         </button>
                     </div>

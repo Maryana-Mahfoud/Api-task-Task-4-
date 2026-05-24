@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FiArrowLeft, FiCheckCircle, FiXCircle } from "react-icons/fi";
+import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import CustomInput from "../components/AddComponents/CustomInput";
 import ImageUploader from "../components/AddComponents/ImageUploader";
-import "../components/AddComponents/additems.css";
+import FormLayout from "../components/EditComponents/FormLayout"; 
+
 const EditItem = () => {
   const navigate = useNavigate();
   const { id } = useParams(); 
@@ -16,17 +17,17 @@ const EditItem = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   
-  // التحكم في الـ Pop-up
+  // context state for pop-up message and type (error/success)
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [popupData, setPopupData] = useState<{ text: string; isError: boolean }>({ text: "", isError: false });
 
-  // 1. function to trigger pop-up with dynamic text and error/success state
+  // function to trigger the pop-up with appropriate message and type (error/success)
   const triggerPopup = (text: string, isError: boolean) => {
     setPopupData({ text, isError });
     setShowPopup(true);
   };
 
-  // 2. function to fetch item data when the page loads
+  // fetch item data on component mount and populate form fields, also handle image URL construction for preview
   useEffect(() => {
     const fetchItemData = async () => {
       try {
@@ -45,11 +46,10 @@ const EditItem = () => {
         setName(result.name);
         setPrice(result.price.toString());
 
-        //  image condiations
         if (result.image) {
-          const fullImageUrl = result.image.startsWith("http")
-            ? result.image
-            : `https://dashboard-i552.onrender.com/${result.image}`;
+          const baseUrl = "https://dashboard-i552.onrender.com".replace(/\/$/, "");
+          const cleanImagePath = result.image.replace(/^\//, "");
+          const fullImageUrl = `${baseUrl}/${cleanImagePath}`;
           setImagePreview(fullImageUrl);
         } else if (result.image_url) {
           setImagePreview(result.image_url);
@@ -77,7 +77,9 @@ const EditItem = () => {
     if (!popupData.isError) navigate("/dashboard");
   };
 
-  // 3. function to handle form submission and update item data
+  // function to handle form submission, 
+  // including validation, API call for updating item,
+  //  and triggering appropriate pop-up messages based on success or failure
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !price.trim()) {
@@ -128,47 +130,42 @@ const EditItem = () => {
   }
 
   return (
-    <div className="add-item-page">
-      <button type="button" className="back-btn" onClick={() => navigate("/dashboard")}>
-        <FiArrowLeft /> Back
-      </button>
+    <>
       
-      <form onSubmit={handleSubmit} className="add-item-form">
-        <h2>EDIT ITEM</h2>
+      <FormLayout
+        title="EDIT ITEM"
+        onSubmit={handleSubmit}
+        isSubmitting={isSubmitting}
+        buttonText={isSubmitting ? "Updating..." : "Save"}
+        backPath="/dashboard"
+      >
         
-        <div className="form-content">
-          <div className="inputs-section">
-            <CustomInput 
-              label="Name" 
-              type="text"
-              value={name} 
-              onChange={setName} 
-              placeholder="Enter product name" 
-            />
-            <CustomInput 
-              label="Price" 
-              type="number"
-              value={price} 
-              onChange={setPrice} 
-              placeholder="Enter product price" 
-            />
-          </div>
-
-          <div className="uploader-section">
-            <ImageUploader 
-              label="Image" 
-              imagePreview={imagePreview} 
-              onImageSelect={handleImageSelect} 
-            />
-          </div>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "20px" }}>
+          <CustomInput 
+            label="Name" 
+            type="text"
+            value={name} 
+            onChange={setName} 
+            placeholder="Enter product name" 
+          />
+          <CustomInput 
+            label="Price" 
+            type="number"
+            value={price} 
+            onChange={setPrice} 
+            placeholder="Enter product price" 
+          />
         </div>
 
-        <button type="submit" className="save-btn" disabled={isSubmitting}>
-          {isSubmitting ? "Updating..." : "Save"}
-        </button>
-      </form>
+        <div style={{ width: "240px", flexShrink: 0 }}>
+          <ImageUploader 
+            label="Image" 
+            imagePreview={imagePreview} 
+            onImageSelect={handleImageSelect} 
+          />
+        </div>
+      </FormLayout>
 
-      {/*  Pop-up */}
       {showPopup && (
         <div className="popup-overlay">
           <div className="popup-card animated-shake">
@@ -185,7 +182,7 @@ const EditItem = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

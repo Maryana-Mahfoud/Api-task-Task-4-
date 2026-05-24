@@ -1,5 +1,5 @@
 /* ==========================================================================
-    1. GLOBAL VARIABLES & ROOT CONFIGURATION (تمت مراجعة الألوان وتوحيدها)
+    1. GLOBAL VARIABLES & ROOT CONFIGURATION 
    ========================================================================== */
 :root {
     /* Colors */
@@ -19,11 +19,11 @@
     --success-color: #4CAF50;
 
     /* Borders & Shadows */
-    --border-radius-sm: 4px;
-    --border-radius-md: 8px;
+    --border-radius-sm: 8px; 
+    --border-radius-md: 12px;
     --border-radius-lg: 20px;
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 15px 45px rgba(0, 0, 0, 0.12);
 
     /* Transitions */
     --transition-fast: all 0.2s ease-in-out;
@@ -41,14 +41,18 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
+html, body, #root {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    min-height: 100vh !important;
+}
 body {
     background-color: var(--bg-main);
     color: var(--text-dark);
     overflow-x: hidden;
     min-height: 100vh;
 }
-
 
 ::-webkit-scrollbar {
     width: 6px;
@@ -72,14 +76,9 @@ input,
 button,
 textarea,
 select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
     outline: none;
-    border: none;
     font-family: inherit;
 }
-
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
@@ -92,8 +91,6 @@ input:-webkit-autofill:focus {
 /* ==========================================================================
     3. GLOBAL UTILITY CLASSES 
    ========================================================================== */
-
-/* Layout Utilities */
 .flex-center {
     display: flex;
     justify-content: center;
@@ -111,18 +108,23 @@ input:-webkit-autofill:focus {
     flex-direction: column;
 }
 
-
 .btn-primary {
     background: var(--primary-gradient);
     color: var(--bg-white);
-    font-weight: 600;
-    padding: 14px;
+    font-weight: 700;
+    height: 50px; 
+    font-size: 15px;
+    border: none;
     border-radius: var(--border-radius-sm);
     cursor: pointer;
     text-align: center;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
     transition: var(--transition-fast);
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn-primary:hover {
@@ -131,27 +133,25 @@ input:-webkit-autofill:focus {
     transform: translateY(-1px);
 }
 
-.btn-primary:active {
-    transform: translateY(0);
-}
-
-
+/* ==========================================================================
+    4. AUTH CONTAINER & CARD SETTINGS 
+   ========================================================================== */
 .auth-container {
     min-height: 100vh;
     background: var(--primary-gradient);
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 30px 20px;
 }
-
 .auth-card {
     background: var(--bg-white);
-    padding: 44px 30px;
+    padding: 45px 40px; 
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-md);
     width: 100%;
-    max-width: 475px;
+    max-width: 520px; 
+    box-sizing: border-box;
 }
 
 
@@ -162,38 +162,45 @@ input:-webkit-autofill:focus {
 }
 
 .form-group label {
-    color: var(--text-muted);
-    font-size: 14px;
-    font-weight: 500;
+    color: var(--text-dark); 
+    font-size: 15px; 
+    font-weight: 600;
+    text-align: left;
 }
 
 .form-input {
-    border: 1px solid #E5E5E5;
-    padding: 14px 16px;
+    border: 1.5px solid #E5E5E5; 
+    padding: 12px 16px;
+    height: 48px; 
     border-radius: var(--border-radius-sm);
-    font-size: 14px;
+    font-size: 15px; 
     color: var(--text-dark);
-    background-color: var(--bg-white);
+    background-color: #FAFAFA; 
     transition: var(--transition-fast);
     width: 100%;
+    box-sizing: border-box;
 }
 
 .form-input::placeholder {
     color: var(--text-light);
 }
 
-
 .form-input:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(254, 175, 0, 0.15);
+    box-shadow: 0 0 0 4px rgba(254, 175, 0, 0.15);
+    background-color: var(--bg-white);
 }
 
+/* ==========================================================================
+    5. IMAGE UPLOAD BOX ADJUSTMENT
+   ========================================================================= */
+
 .image-upload-box {
-    border: 1px dashed var(--primary-color);
-    border-radius: 6px;
+    border: 1.5px dashed var(--primary-color);
+    border-radius: var(--border-radius-sm);
     background: #FFFDF6;
-    height: 60px;
-    width: 60px;
+    height: 100px; 
+    width: 100%; 
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -205,7 +212,6 @@ input:-webkit-autofill:focus {
 
 .image-upload-box:hover {
     background: #FFF9E6;
-    border-color: var(--primary-color);
 }
 
 .image-preview {
@@ -213,7 +219,6 @@ input:-webkit-autofill:focus {
     height: 100%;
     object-fit: cover;
 }
-
 
 .modal-overlay, .popup-overlay {
     position: fixed;

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { FiArrowLeft, FiCheckCircle, FiXCircle } from "react-icons/fi"; 
 import CustomInput from "../components/AddComponents/CustomInput";
 import ImageUploader from "../components/AddComponents/ImageUploader";
-// المسار الصحيح للوصول إلى ملف الـ CSS الموجود داخل مجلد المكونات
 import "../components/AddComponents/additems.css";
 
 const AddItem = () => {

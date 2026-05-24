@@ -93,7 +93,6 @@ const AuthForm = ({ type, title, subtitle, fields, buttonText, onSubmit, isLoadi
                             </>
                         ) : (
                             <>
-                                
                                 Do you have an account?{" "}
                                 <Link to="/sign-in" className="auth-link">Sign in</Link> 
                             </>

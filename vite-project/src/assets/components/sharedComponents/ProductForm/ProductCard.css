@@ -149,3 +149,19 @@
 .delete-btn-yes:active, .delete-btn-no:active {
     transform: scale(0.97);
 }
+
+
+.btn-action {
+    padding: 8px 24px; 
+    border: none;
+    border-radius: 4px; 
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-transform: capitalize;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.btn-action:active {
+    transform: scale(0.95); 
+}

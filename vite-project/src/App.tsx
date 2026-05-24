@@ -1,5 +1,6 @@
 
-import Index from "./assets/routes/index"; // المسار حسب مجلداتك
+import Index from "./assets/routes/index"; 
+import './index.css' 
 
 function App() {
   return <Index />;

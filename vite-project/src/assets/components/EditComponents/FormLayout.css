@@ -1,0 +1,94 @@
+
+.form-page-container {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #FFFFFF;
+    min-height: calc(100vh - 40px);
+}
+
+
+.form-back-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    color: #6c757d;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    width: fit-content;
+    transition: color 0.2s ease;
+}
+
+.form-back-btn:hover {
+    color: #1A1A1A;
+}
+
+
+.shared-form-card {
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    max-width: 800px; 
+    width: 100%;
+}
+
+.shared-form-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1A1A1A;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+
+.shared-form-body {
+    display: flex;
+    gap: 40px; 
+    margin-bottom: 35px;
+}
+
+
+.shared-form-submit-btn {
+    background-color: var(--primary-color, #FEAF00);
+    color: #FFFFFF;
+    border: none;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 0 45px;
+    transition: all 0.2s ease;
+}
+
+.shared-form-submit-btn:hover:not(:disabled) {
+    background-color: #e59e00;
+    transform: translateY(-1px);
+}
+
+.shared-form-submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+@media (max-width: 768px) {
+    .shared-form-body {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .shared-form-card {
+        padding: 25px 20px;
+    }
+    .shared-form-submit-btn {
+        width: 100%;
+    }
+}
