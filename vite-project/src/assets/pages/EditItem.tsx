@@ -4,6 +4,7 @@ import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import CustomInput from "../components/AddComponents/CustomInput";
 import ImageUploader from "../components/AddComponents/ImageUploader";
 import FormLayout from "../components/EditComponents/FormLayout"; 
+import "../components/AddComponents/additems.css";
 
 const EditItem = () => {
   const navigate = useNavigate();
@@ -17,17 +18,39 @@ const EditItem = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   
-  // context state for pop-up message and type (error/success)
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [popupData, setPopupData] = useState<{ text: string; isError: boolean }>({ text: "", isError: false });
 
-  // function to trigger the pop-up with appropriate message and type (error/success)
+
+  
   const triggerPopup = (text: string, isError: boolean) => {
     setPopupData({ text, isError });
     setShowPopup(true);
   };
 
-  // fetch item data on component mount and populate form fields, also handle image URL construction for preview
+  const handleClosePopup = () => {
+    setShowPopup(false);
+    if (!popupData.isError) navigate("/dashboard");
+  };
+
+  const handleImageSelect = (file: File) => {
+    if (imagePreview && imagePreview.startsWith("blob:")) {
+      URL.revokeObjectURL(imagePreview);
+    }
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+
+  useEffect(() => {
+    return () => {
+      if (imagePreview && imagePreview.startsWith("blob:")) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
+  
   useEffect(() => {
     const fetchItemData = async () => {
       try {
@@ -56,6 +79,7 @@ const EditItem = () => {
         }
 
       } catch (error: unknown) {
+        
         if (error instanceof Error) triggerPopup(error.message, true);
       } finally {
         setIsLoading(false);
@@ -67,19 +91,6 @@ const EditItem = () => {
     }
   }, [id]);
 
-  const handleImageSelect = (file: File) => {
-    setImageFile(file);
-    setImagePreview(URL.createObjectURL(file));
-  };
-
-  const handleClosePopup = () => {
-    setShowPopup(false);
-    if (!popupData.isError) navigate("/dashboard");
-  };
-
-  // function to handle form submission, 
-  // including validation, API call for updating item,
-  //  and triggering appropriate pop-up messages based on success or failure
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !price.trim()) {
@@ -112,7 +123,10 @@ const EditItem = () => {
       if (!response.ok) throw new Error("Update failed. Please try again.");
 
       triggerPopup("Item updated successfully!", false);
-      setTimeout(() => navigate("/dashboard"), 1500);
+      
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1500);
 
     } catch (error: unknown) {
       if (error instanceof Error) triggerPopup(error.message, true);
@@ -131,7 +145,6 @@ const EditItem = () => {
 
   return (
     <>
-      
       <FormLayout
         title="EDIT ITEM"
         onSubmit={handleSubmit}
@@ -139,8 +152,7 @@ const EditItem = () => {
         buttonText={isSubmitting ? "Updating..." : "Save"}
         backPath="/dashboard"
       >
-        
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "20px" }}>
+        <div className="inputs-section">
           <CustomInput 
             label="Name" 
             type="text"
@@ -157,7 +169,7 @@ const EditItem = () => {
           />
         </div>
 
-        <div style={{ width: "240px", flexShrink: 0 }}>
+        <div className="uploader-section">
           <ImageUploader 
             label="Image" 
             imagePreview={imagePreview} 
@@ -168,15 +180,13 @@ const EditItem = () => {
 
       {showPopup && (
         <div className="popup-overlay">
-          <div className="popup-card animated-shake">
-            <div className="popup-icon-box" style={{ backgroundColor: popupData.isError ? "#e60000" : "#00cc66" }}>
-              {popupData.isError ? <FiXCircle /> : <FiCheckCircle />}
+          <div className={`popup-box ${popupData.isError ? "popup-error" : "popup-success"}`}>
+            <div className="popup-icon-wrapper">
+              {popupData.isError ? <FiXCircle className="pop-icon-err" /> : <FiCheckCircle className="pop-icon-success" />}
             </div>
-            <h3 className="popup-title" style={{ color: popupData.isError ? "#e60000" : "#00cc66" }}>
-              {popupData.isError ? "Update Failed" : "Success"}
-            </h3>
-            <p className="popup-message">{popupData.text}</p>
-            <button type="button" className="popup-btn" style={{ backgroundColor: popupData.isError ? "#e60000" : "#00cc66" }} onClick={handleClosePopup}>
+            <h2>{popupData.isError ? "Oops!" : "Success!"}</h2>
+            <p>{popupData.text}</p>
+            <button type="button" className="popup-close-btn" onClick={handleClosePopup}>
               Ok
             </button>
           </div>

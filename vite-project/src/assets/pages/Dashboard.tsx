@@ -14,13 +14,13 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  //variable to manage pagination
+  // (Pagination)
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 8; 
 
   const [productToDelete, setProductToDelete] = useState<IProduct | null>(null);
 
-  // fetching products from the backend API when the component mounts
+  // fetch data 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -46,7 +46,7 @@ const Dashboard = () => {
     fetchProducts();
   }, []);
 
-  // function to handle search input changes and filter products accordingly
+  // sarch function 
   const handleSearch = (searchTerm: string) => {
     setCurrentPage(1); 
     if (!searchTerm.trim()) {
@@ -65,6 +65,7 @@ const Dashboard = () => {
     navigate(`/dashboard/edit-item/${product.id}`);
   };
 
+  // delet function
   const handleConfirmDelete = async () => {
     if (!productToDelete) return;
 
@@ -81,24 +82,35 @@ const Dashboard = () => {
         throw new Error("Failed to delete the product. Please try again.");
       }
 
+      // update list Item
       const updatedProducts = products.filter((p) => p.id !== productToDelete.id);
       setProducts(updatedProducts);
-      setFilteredProducts(updatedProducts);
-      setProductToDelete(null);
-      
-      // less totalPage number
-      const newTotalPages = Math.ceil(updatedProducts.length / itemsPerPage);
-      if (currentPage > newTotalPages && currentPage > 1) {
-        setCurrentPage(newTotalPages);
-      }
+
+      // update filter list with true page number
+      setFilteredProducts((prevFiltered) => {
+        const newFiltered = prevFiltered.filter((p) => p.id !== productToDelete.id);
+        
+        // calculate number of page
+        const newTotalPages = Math.ceil(newFiltered.length / itemsPerPage);
+        if (currentPage > newTotalPages && newTotalPages > 0) {
+          setCurrentPage(newTotalPages);
+        } else if (newFiltered.length === 0) {
+          setCurrentPage(1);
+        }
+        
+        return newFiltered;
+      });
+
+      setProductToDelete(null); 
 
     } catch (error: unknown) {
       if (error instanceof Error) {
         setErrorMessage(error.message);
       }
     }
-  }
+  };
 
+  // calculate fileds number in this page
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -135,7 +147,6 @@ const Dashboard = () => {
             )}
           </div>
 
-          
           {totalPages > 1 && (
             <Pagination 
               currentPage={currentPage} 
@@ -146,7 +157,7 @@ const Dashboard = () => {
         </div>
       )}
 
-      
+      {/* confirm delet*/}
       {productToDelete && (
         <div className="delete-popup-overlay">
           <div className="delete-popup-card">
@@ -159,6 +170,7 @@ const Dashboard = () => {
         </div>
       )}
 
+      {/* popUp to Show errors*/}
       {errorMessage && (
         <div className="popup-overlay">
           <div className="popup-card animated-shake">

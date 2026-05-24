@@ -162,7 +162,7 @@
 .image-upload-box {
     position: relative;
     width: 100%;
-    height: 120px;
+    height: fit-content;
     border: 2px dashed #dcdcdc;
     border-radius: 8px;
     display: flex;

@@ -44,23 +44,28 @@ const SignIn = () => {
         }
 
         /* store user information in localStorage safely */
-        if (result.user) {
-          const firstName = result.user.first_name || "";
-          const lastName = result.user.last_name || "";
-          const fullName = `${firstName} ${lastName}`.trim();
+          if (result.user) {
+            const firstName = result.user.first_name || "";
+            const lastName = result.user.last_name || "";
+            const fullName = `${firstName} ${lastName}`.trim();
 
-    
-          localStorage.setItem("user_full_name", fullName || "User Name");
+            localStorage.setItem("user_full_name", fullName || "User Name");
 
-          
-          if (result.user.profile_image && result.user.profile_image !== "null" && result.user.profile_image.trim() !== "") {
-            localStorage.setItem("user_avatar", result.user.profile_image);
-          }else {
             
-            localStorage.setItem("user_avatar", person); 
-      }
-        }
+            const rawAvatar = result.user.profile_image_url || result.user.profile_image;
 
+            if (rawAvatar && rawAvatar.trim() !== "") {
+              
+              const finalAvatarUrl = rawAvatar.startsWith("http") 
+                ? rawAvatar 
+                : `https://dashboard-i552.onrender.com/images/${rawAvatar}`;
+
+              localStorage.setItem("user_avatar", finalAvatarUrl);
+              console.log("Avatar successfully saved to LocalStorage:", finalAvatarUrl);
+            } else {
+              localStorage.setItem("user_avatar", person); 
+            }
+          }
         /* show success pop-up */
         setShowSuccessPopup(true);
         

@@ -2,15 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthForm from "../components/sharedComponents/AuthForm/AuthForm"; 
 
-// Save photo in local storage as base64 string to display it later in the sidebar
-const convertImageToBase64 = (file: File): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (error) => reject(error);
-  });
-};
+
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -28,34 +20,11 @@ const SignUp = () => {
     { name: "password_confirmation", type: "password", placeholder: "Re-enter password", label: "Re-enter password", halfWidth: true },
   ];
 
-  const handleRegisterSubmit = async (formData: FormData) => {
+const handleRegisterSubmit = async (formData: FormData) => {
     setIsLoading(true);
     setErrorMessage(null); 
     
-    // fetch Data to the backend
     try {
-      
-      const imageFile = formData.get("profile_image") as File;
-      
-      if (imageFile && imageFile.size > 0) {
-        const base64Image = await convertImageToBase64(imageFile);
-        localStorage.setItem("user_avatar", base64Image);
-      } else {
-        localStorage.removeItem("user_avatar"); 
-      }
-
-      // fetch first name and last name from form data and save it in local storage as well to display it in the sidebar
-      const firstName = formData.get("first_name") as string;
-      const lastName = formData.get("last_name") as string;
-      if (firstName && lastName) {
-        localStorage.setItem("user_full_name", `${firstName} ${lastName}`);
-      }
-
-      // put the image file in the form data to send it to the backend
-      if (imageFile) {
-        formData.set("profile_image", imageFile); 
-      }
-
       const response = await fetch("https://dashboard-i552.onrender.com/api/register", {
         method: "POST",
         headers: {
@@ -69,7 +38,6 @@ const SignUp = () => {
       if (response.ok) {
         setShowSuccessPopup(true); 
       } else {
-        
         if (result.errors) {
           const detailedErrors = Object.values(result.errors).flat().join(" | ");
           setErrorMessage(detailedErrors);
@@ -83,6 +51,7 @@ const SignUp = () => {
     } finally {
       setIsLoading(false);
     }
+    console.log("FormData Profile Image:", formData.get("profile_image"));
   };
 
   return (

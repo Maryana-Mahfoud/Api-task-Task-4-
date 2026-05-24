@@ -1,17 +1,17 @@
 /* ==========================================================================
-    main color palette and design tokens for the Add Item page
+    MAIN COLOR PALETTE AND DESIGN TOKENS
    ========================================================================== */
 :root {
     --primary-color: #F59E0B;
     --primary-hover: #D97706;
     --bg-white: #ffffff;
-    --text-dark: #000000;
+    --text-dark: #1A202C; 
     --text-muted: #718096;
     --border-color: #E2E8F0;
 }
 
 /* ==========================================================================
-    styling for the Add Item page layout and components
+    PAGE LAYOUT & CONTAINER
    ========================================================================== */
 .add-item-page-wrapper {
     display: flex;
@@ -23,67 +23,63 @@
 
 .add-item-container {
     flex: 1;
-    margin-left: 260px; 
-    padding: 60px 80px;
-    max-width: 1300px; 
+    margin-left: 64px;
+    padding: 40px 50px; 
+    max-width: 1200px; 
     width: calc(100% - 260px);
     box-sizing: border-box;
 }
 
-
 .back-btn {
     background: var(--bg-white);
-    border: 1px solid #EAEAEA;
+    border: 1px solid #E2E8F0;
     border-radius: 50%;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    margin-bottom: 35px;
+    margin-bottom: 20px; 
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    font-size: 1.2rem;
-    color: #333;
+    font-size: 1.1rem;
+    color: #4A5568;
     transition: transform 0.2s, background-color 0.2s;
 }
 
 .back-btn:hover {
     transform: scale(1.05);
-    background-color: #FAFAFA;
+    background-color: #F7FAFC;
 }
 
-
 .add-item-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 800;
     color: var(--text-dark);
-    margin-bottom: 45px;
+    margin-bottom: 30px; 
     text-transform: uppercase;
     letter-spacing: -0.5px;
 }
 
 /* ==========================================================================
-    3.layout for displaying 
+    FORM GRID & INPUTS SECTION
    ========================================================================== */
 .add-item-form-grid {
     display: grid;
     grid-template-columns: 1.2fr 1fr; 
-    gap: 50px;
+    gap: 40px; 
     align-items: start;
     width: 100%;
     box-sizing: border-box;
 }
 
-
 .inputs-section {
     display: flex;
     flex-direction: column;
-    gap: 30px; 
+    gap: 20px;
     width: 100%;
     box-sizing: border-box;
 }
-
 
 .uploader-section {
     width: 100%;
@@ -93,57 +89,58 @@
 .form-group, .custom-input-group {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px; 
     width: 100%;
-    max-width: 100%;
     box-sizing: border-box;
 }
 
 .form-group label, .custom-input-group label {
-    font-size: 1.1rem;
-    color: #333333;
+    font-size: 1rem;
+    color: #2D3748;
     font-weight: 600;
 }
 
 .form-group input, .custom-input-group input {
     width: 100% !important; 
-    padding: 16px 20px; 
+    padding: 14px 18px; 
     border: 1px solid var(--border-color);
     border-radius: 10px;
-    font-size: 1.05rem;
+    font-size: 1rem;
     outline: none;
-    background-color: #FAFAFA;
+    background-color: #F7FAFC;
     box-sizing: border-box;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
 }
 
 .form-group input:focus, .custom-input-group input:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
     background-color: #ffffff;
 }
 
 /* ==========================================================================
-    4. box to upload images 
+    IMAGE UPLOADER BOX (DROPZONE)
    ========================================================================== */
 .image-upload-section, .uploader-container {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
     width: 100%;
     box-sizing: border-box;
 }
 
 .image-upload-section label, .uploader-container label {
-    font-size: 1.1rem;
-    color: #333333;
+    font-size: 1rem;
+    color: #2D3748;
     font-weight: 600;
 }
+
 
 .upload-dropzone, .dropzone, .image-uploader-box {
     border: 2px dashed var(--primary-color) !important;
     border-radius: 14px;
-    height: fit-content; 
+    min-height: 250px; 
+    height: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -151,8 +148,10 @@
     cursor: pointer;
     background-color: #FEFBF6;
     width: 100% !important; 
+    padding: 15px;
     box-sizing: border-box;
     transition: background-color 0.2s, transform 0.2s;
+    overflow: hidden;
 }
 
 .upload-dropzone:hover {
@@ -160,32 +159,33 @@
 }
 
 .upload-icon {
-    font-size: 3.8rem;
+    font-size: 3rem; 
     color: var(--primary-color);
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .upload-text {
     color: var(--text-muted);
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 500;
+    text-align: center;
 }
 
 .upload-dropzone img, .dropzone img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    border-radius: 12px;
+    object-fit: contain; 
+    border-radius: 10px;
 }
 
 /* ==========================================================================
-    5.save button
+    SAVE BUTTON ROW
    ========================================================================== */
 .form-submit-row {
     grid-column: 1 / -1; 
     display: flex;
     justify-content: center;
-    margin-top: 50px;
+    margin-top: 30px; 
     width: 100%;
 }
 
@@ -193,19 +193,19 @@
     background-color: var(--primary-color);
     color: #ffffff;
     border: none;
-    padding: 16px 140px; 
+    padding: 14px 100px;
     border-radius: 10px;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);
     transition: all 0.2s ease-in-out;
 }
 
 .save-item-btn:hover:not(:disabled) {
     background-color: var(--primary-hover);
     transform: translateY(-2px);
-    box-shadow: 0 7px 20px rgba(245, 158, 11, 0.4);
+    box-shadow: 0 6px 18px rgba(245, 158, 11, 0.35);
 }
 
 .save-item-btn:active {
@@ -213,7 +213,7 @@
 }
 
 /* ==========================================================================
-    6. pop-up success and error messages
+    CUSTOM POP-UP OVERLAY & BOX
    ========================================================================== */
 .popup-overlay {
     position: fixed;
@@ -221,43 +221,43 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999 !important; 
-    animation: fadeIn 0.25s ease-out;
+    animation: fadeIn 0.2s ease-out;
 }
 
 .popup-box {
     background-color: #ffffff;
-    padding: 40px;
-    border-radius: 20px;
+    padding: 30px;
+    border-radius: 16px;
     width: 90%;
-    max-width: 420px;
+    max-width: 380px;
     text-align: center;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    animation: scaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    animation: scaleUp 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-sizing: border-box;
 }
 
 .popup-box h2 {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    margin: 18px 0 12px 0;
-    color: #111111;
+    margin: 12px 0 8px 0;
+    color: #1A202C;
 }
 
 .popup-box p {
-    font-size: 1.05rem;
-    color: #555555;
-    margin-bottom: 30px;
-    line-height: 1.6;
+    font-size: 0.98rem;
+    color: #4A5568;
+    margin-bottom: 24px;
+    line-height: 1.5;
 }
 
 .popup-icon-wrapper {
-    font-size: 4.2rem;
+    font-size: 3.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -270,10 +270,10 @@
     background-color: var(--primary-color);
     color: white;
     border: none;
-    padding: 14px;
-    font-size: 1.1rem;
+    padding: 12px;
+    font-size: 1rem;
     font-weight: 600;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
     width: 100%;
     transition: background-color 0.2s;
@@ -283,44 +283,46 @@
     background-color: var(--primary-hover);
 }
 
-
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes scaleUp { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes scaleUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
 /* ==========================================================================
-    7.(Responsive)
+    RESPONSIVE DESIGN (MEDIA QUERIES)
    ========================================================================== */
 @media (max-width: 1150px) {
     .add-item-container {
-        padding: 40px 40px;
+        padding: 30px 40px;
     }
     .add-item-form-grid {
-        gap: 40px;
+        gap: 30px;
     }
 }
 
 @media (max-width: 992px) {
     .add-item-form-grid {
         grid-template-columns: 1fr;
-        gap: 35px;
+        gap: 25px;
     }
     .add-item-container {
         margin-left: 0;
         width: 100%;
-        padding: 40px 30px;
+        padding: 30px 24px;
     }
 }
 
 @media (max-width: 576px) {
     .add-item-container {
-        padding: 30px 20px;
+        padding: 20px 16px;
     }
     .add-item-title {
-        font-size: 2rem;
-        margin-bottom: 30px;
+        font-size: 1.75rem;
+        margin-bottom: 20px;
     }
     .save-item-btn {
         width: 100%;
         padding: 14px;
+    }
+    .upload-dropzone, .dropzone, .image-uploader-box {
+        min-height: 200px; 
     }
 }

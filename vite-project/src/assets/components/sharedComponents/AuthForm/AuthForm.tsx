@@ -14,9 +14,11 @@ const AuthForm = ({ type, title, subtitle, fields, buttonText, onSubmit, isLoadi
         e.preventDefault();
         const data = new FormData(e.currentTarget);
         
+        // send stored photo
         if (type === "signup" && profileImage) {
-            data.append("profile_image", profileImage);
+            data.set("profile_image", profileImage);
         }
+        
         onSubmit(data);
     };
 

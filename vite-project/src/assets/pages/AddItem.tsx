@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiArrowLeft, FiCheckCircle, FiXCircle } from "react-icons/fi"; 
 import CustomInput from "../components/AddComponents/CustomInput";
@@ -18,7 +18,20 @@ const AddItem = () => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [popupData, setPopupData] = useState<{ text: string; isError: boolean }>({ text: "", isError: false });
 
+  
+  useEffect(() => {
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
+  
   const handleImageSelect = (file: File) => {
+    if (imagePreview) {
+      URL.revokeObjectURL(imagePreview);
+    }
     setImageFile(file);
     setImagePreview(URL.createObjectURL(file));
   };
@@ -62,8 +75,8 @@ const AddItem = () => {
 
       triggerPopup("Item added successfully!", false);
       
+      
       setTimeout(() => {
-        setShowPopup(false);
         navigate("/dashboard");
       }, 2000);
 
@@ -104,7 +117,7 @@ const AddItem = () => {
         </form>
       </div>
 
-      {/* ==================== الـ Pop-up المخصص ==================== */}
+      {/* =====Pop-up  ============ */}
       {showPopup && (
         <div className="popup-overlay">
           <div className={`popup-box ${popupData.isError ? "popup-error" : "popup-success"}`}>

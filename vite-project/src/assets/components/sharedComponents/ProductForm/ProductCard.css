@@ -18,14 +18,17 @@
     width: 100%;
     height: 100%;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
 }
 
 .product-img {
     width: 100%;
     height: 100%;
     object-fit: contain; 
-    background-color: #f8f9fa; 
-    padding: 15px; 
+    transition: transform 0.3s ease;
 }
 
 
@@ -35,7 +38,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.85); 
+    background: rgba(255, 255, 255, 0.92); 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -44,6 +47,7 @@
     opacity: 0;
     transition: opacity 0.3s ease;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .product-card:hover .product-overlay {
@@ -56,64 +60,75 @@
     color: #000000;
     margin: 0;
     text-align: center;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 
 .product-actions {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     width: 100%;
     justify-content: center;
 }
 
 .btn-action {
-    padding: 8px 18px;
+    padding: 10px 24px;
     border: none;
     border-radius: 6px;
     font-weight: 600;
     cursor: pointer;
     font-size: 0.9rem;
-    transition: background 0.2s;
+    transition: background 0.2s, transform 0.1s;
 }
-
+.btn-action:active {
+    transform: scale(0.95); 
+}
 .edit-btn {
     background-color: #F2A700; 
     color: white;
+}
+.edit-btn:hover {
+    background-color: #d99600;
 }
 
 .delete-btn {
     background-color: #E60000; 
     color: white;
 }
-
+.delete-btn:hover {
+    background-color: #b30000;
+}
 
 .delete-popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(165, 158, 158, 0.4);
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 2100;
 }
 
 
 .delete-popup-card {
     background-color: #ffffff;
     padding: 40px 50px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     text-align: center;
-    max-width: 500px;
+    max-width: 450px;
     width: 90%;
+    box-sizing: border-box;
 }
 
 
 .delete-popup-title {
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 700;
     color: #1a1a1a;
     margin-bottom: 30px;
@@ -125,7 +140,7 @@
 .delete-popup-buttons {
     display: flex;
     justify-content: center;
-    gap: 40px;
+    gap: 20px;
 }
 
 
@@ -138,13 +153,19 @@
     font-weight: 600;
     border-radius: 4px;
     cursor: pointer;
+    flex: 1;
     min-width: 120px;
     transition: background-color 0.2s, transform 0.1s;
 }
-
-.delete-btn-yes:hover, .delete-btn-no:hover {
-    background-color: #d99600;
+.delete-btn-no {
+    background-color: #f1f1f1;
+    color: #333333;
 }
+.delete-btn-no:hover {
+    background-color: #e4e4e4;
+}
+
+
 
 .delete-btn-yes:active, .delete-btn-no:active {
     transform: scale(0.97);

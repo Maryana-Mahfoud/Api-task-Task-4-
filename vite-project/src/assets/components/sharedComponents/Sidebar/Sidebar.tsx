@@ -12,26 +12,25 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  /*state to read data  */
+  
   const [userData] = useState(() => {
     const storedName = localStorage.getItem("user_full_name");
     const storedAvatar = localStorage.getItem("user_avatar");
 
     return {
       name: storedName || "User Name",
-      img: storedAvatar && storedAvatar !== "null" ? storedAvatar : person,
+      img: storedAvatar && storedAvatar.trim() !== "" ? storedAvatar : person,
     };
   });
 
-
-  // array of items to display in the sidebar menu with their paths and icons
+  // array of items
   const menuItems: IMenuItem[] = [
     { id: "products", label: "Products", icon: productIcon, path: "/dashboard" },
     { id: "favorites", label: "Favorites", icon: favIcone, path: "/dashboard" },
     { id: "orders", label: "order list", icon: favIcone, path: "/dashboard" },
   ];
 
-  //function to logOut
+  // logOut
   const handleLogout = () => {
     localStorage.clear(); 
     navigate("/sign-in"); 

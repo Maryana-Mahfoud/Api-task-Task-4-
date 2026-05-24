@@ -14,18 +14,19 @@ const DEFAULT_IMAGE = Iphone;
 const ProductCard = ({ product, onDeleteClick, onEditClick }: ProductCardProps) => {
     const navigate = useNavigate(); 
 
-    const productImage = product.image_url && product.image_url.trim() !== "" 
-        ? product.image_url 
+    
+    const rawImage = product.image_url || product.image;
+
+    const productImage = rawImage && rawImage.trim() !== "" 
+        ? (rawImage.startsWith("http") ? rawImage : `https://dashboard-i552.onrender.com/images/${rawImage}`)
         : DEFAULT_IMAGE;
 
-    // function to handle card click and navigate to product details page
     const handleCardClick = () => {
         navigate(`/dashboard/show-item/${product.id}`); 
     };
 
     return (
         <div className="product-card">
-
             <div className="product-img-container" onClick={handleCardClick} style={{ cursor: "pointer" }}>
                 <img 
                     src={productImage} 
@@ -35,7 +36,7 @@ const ProductCard = ({ product, onDeleteClick, onEditClick }: ProductCardProps) 
                         width: "100%",
                         height: "180px",       
                         objectFit: "contain",  
-                        padding: product.image_url && product.image_url.trim() !== "" ? "0" : "15px" 
+                        padding: rawImage && rawImage.trim() !== "" ? "0" : "15px" 
                     }}
                     onError={(e) => {
                         const target = e.target as HTMLImageElement;
@@ -44,8 +45,6 @@ const ProductCard = ({ product, onDeleteClick, onEditClick }: ProductCardProps) 
                     }}
                 />
                 
-                {/* overlay */}
-
                 <div className="product-overlay">
                     <h3 className="product-name-overlay">{product.name}</h3>
                     <div className="product-actions">

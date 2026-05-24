@@ -5,7 +5,7 @@ import { GiSandsOfTime } from "react-icons/gi";
 import type { IProduct } from "../Interfaces/productInterface"; 
 import ShowItemImage from "../components/ShowItem/ShowItemImage";
 import ShowItemDetails from "../components/ShowItem/ShowItemDetails";
-import "../components/ShowItem/ShowItem.css"; 
+import "../components/ShowItem/ShowItem.css"
 
 const ShowItemInfo = () => {
   const { id } = useParams<{ id: string }>();
@@ -52,7 +52,6 @@ const ShowItemInfo = () => {
   if (rawImagePath && typeof rawImagePath === "string") {
     let trimmedPath = rawImagePath.trim();
     
-    // Handle common cases of missing protocol and ensure it starts with http:// or https://
     if (trimmedPath.startsWith("http://")) {
       trimmedPath = trimmedPath.replace("http://", "https://");
     }
@@ -68,16 +67,16 @@ const ShowItemInfo = () => {
 
   if (isLoading) {
     return (
-      <div className="loading-container-center" style={{ textAlign: "center", padding: "100px" }}>
-        <GiSandsOfTime style={{ fontSize: "80px", color: "#f2a700", animation: "spin 2s linear infinite" }} />
-        <p style={{ color: "#666", marginTop: "15px" }}>Fetching details...</p>
+      <div className="loading-container-center">
+        <GiSandsOfTime className="loading-icon-spin" />
+        <p>Fetching details...</p>
       </div>
     );
   }
 
   if (errorMessage || !product) {
     return (
-      <div className="error-container-center" style={{ textAlign: "center", padding: "50px", color: "red" }}>
+      <div className="error-container-center">
         <p>{errorMessage || "Product not found."}</p>
         <button onClick={() => navigate("/dashboard")} className="back-circle-btn">Back</button>
       </div>
@@ -86,17 +85,19 @@ const ShowItemInfo = () => {
 
   return (
     <div className="show-item-page-container">
+      
       <button className="back-circle-btn" onClick={() => navigate("/dashboard")} title="Go Back">
-        <FiArrowLeft size={20} />
+        <FiArrowLeft size={18} />
       </button>
 
-      <div className="show-item-content-wrapper">
+      
+      <div className="show-item-card-wrapper">
         <h1 className="show-item-main-title">{product.name}</h1>
 
         <div className="show-item-layout-grid">
           
           <ShowItemImage imageUrl={imageUrl} altText={product.name} />
-
+          
           
           <ShowItemDetails 
             price={product.price} 
